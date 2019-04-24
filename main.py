@@ -17,20 +17,21 @@ fake = Faker()
 class Crime(db.Model):
     id = db.Column(db.Integer(), primary_key=True)
     latitude = db.Column(db.Float())
-    logintude = db.Column(db.Float())
+    longitude = db.Column(db.Float())
     date = db.Column(db.DateTime(), default=datetime.datetime.now)
-    cartegory = db.Column(db.Text(), nullable=False)
+    category = db.Column(db.Text(), nullable=False)
     description = db.Column(db.Text(), nullable=False)
     updated_at = db.Column(db.DateTime(), default=datetime.datetime.now)
 
-    def __init__(self, logitude, latitude, cartegory, description):
-        self.logitude = logitude
+    def __init__(self, longitude, latitude, category, description, date):
+        self.longitude = longitude
         self.latitude = latitude 
-        self.cartegory = cartegory
+        self.category = category
         self.description = description
+        self.date = date
 
     def __repr__(self):
-        return "<Crime at '{}, {}': {}>".format(self.logitude, self.latitude, self.cartegory)
+        return "<Crime at '{}, {}': {}>".format(self.logitude, self.latitude, self.category)
 
 
 @app.route('/')
@@ -45,12 +46,13 @@ def home():
 def add():
     #this method adds a crime to the database so we will improve it so we can add all the fields to the database
     #all these data fields are expected to come from the user
-    description  = request.form.get("description")
-    longitude =  fake.latitude()
-    latitude = fake.longitude()
-    cartegory = request.form.get("cartegory")
+    category = request.form.get("category")
+    date = request.form.get("date")
+    latitude = float(request.form.get("latitude"))
+    longitude = float(request.form.get("longitude"))
+    description = request.form.get("description")
 
-    crime = Crime(longitude, latitude, cartegory, description)
+    crime = Crime(longitude, latitude, category, description, date)
 
     #now simply add crime to the database
     db.session.add(crime)

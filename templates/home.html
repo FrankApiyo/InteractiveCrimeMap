@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>home</title>
+</head>
+<body>
+    <h1>Crime Map</h1>
+    <form action="/add" method="POST">
+
+        <label for="cartegory">cartegory</label>
+        <select name="cartegory">
+            <option value="Inchoate Crimes">Inchoate Crimes</option>
+            <option value="Statutory Crime">Statutory Crime</option>
+            <option value="Property Crimes">Property Crimes</option>
+            <option value="Personal Crimes">Personal Crimes</option>
+        </select> <br>
+        <label for="description">description</label><br>
+        <textarea  rows="4" cols="50" name="description"></textarea>
+        <br>
+        <input type="submit" value="Submit">
+    </form>
+    <a href="/clear">clear</a>
+    {% for crime in data %}
+            <hr>
+            <p>{{crime.cartegory}}</p>
+            <p>{{crime.description}}</p>
+            <hr>
+    {% endfor %}
+</body>
+</html>
